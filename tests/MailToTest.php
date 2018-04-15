@@ -200,12 +200,26 @@ class MailToTest extends TestCase
 
     public function testSetBody()
     {
-        $this->markTestIncomplete('Body has not yet been implemented.');
+        $mailto = new MailTo;
+        $mailto->setBody('This is the message body.');
+
+        $this->assertEquals('This is the message body.', $this->getProperty($mailto, 'body'));
+    }
+
+    public function testSetBodyTrimsText()
+    {
+        $mailto = new MailTo;
+        $mailto->setBody('  This is the message body.' . PHP_EOL);
+
+        $this->assertEquals('This is the message body.', $this->getProperty($mailto, 'body'));
     }
 
     public function testGetBody()
     {
-        $this->markTestIncomplete('Body has not yet been implemented.');
+        $mailto = new MailTo;
+        $mailto->setBody('This is the message body');
+
+        $this->assertEquals('This is the message body', $mailto->getBody());
     }
 
     public function testGetLinkWithSingleRecipient()

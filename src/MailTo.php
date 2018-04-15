@@ -130,7 +130,7 @@ class MailTo
      */
     public function setBody(string $body)
     {
-        $this->body = $body;
+        $this->body = trim($body);
     }
 
     /**

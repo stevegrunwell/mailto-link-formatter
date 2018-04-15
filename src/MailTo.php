@@ -15,7 +15,7 @@ class MailTo
      *
      * @var array
      */
-    protected $to = [];
+    protected $recipients = [];
 
     /**
      * Additional headers to attach to the message.
@@ -34,14 +34,14 @@ class MailTo
     /**
      * Create a new MailTo instance.
      *
-     * @param string|array $recipient Optional. One or more message recipients. Default is empty.
-     * @param array        $headers   Optional. Headers (Subject Cc, Bcc, etc.) to include with the
-     *                                message. Default is empty.
-     * @param string       $body      Optional. The message body. Default is empty.
+     * @param string|array $recipients Optional. One or more message recipients. Default is empty.
+     * @param array        $headers    Optional. Headers (Subject Cc, Bcc, etc.) to include with the
+     *                                 message. Default is empty.
+     * @param string       $body       Optional. The message body. Default is empty.
      */
-    public function __construct($to = '', array $headers = [], string $body = '')
+    public function __construct($recipients = '', array $headers = [], string $body = '')
     {
-        $this->setRecipients($to);
+        $this->setRecipients($recipients);
         $this->setHeaders($headers);
         $this->setBody($body);
     }

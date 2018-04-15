@@ -1,0 +1,34 @@
+{
+    "name": "stevegrunwell/mailto-link-formatter",
+    "description": "Formatter for creating complex mailto: links",
+    "type": "library",
+    "license": "MIT",
+    "keywords": [
+        "email",
+        "mailto",
+        "formatting"
+    ],
+    "authors": [
+        {
+            "name": "Steve Grunwell",
+            "email": "steve@stevegrunwell.com",
+            "homepage": "https://stevegrunwell.com"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/stevegrunwell/mailto-link-formatter/issues",
+        "source": "https://github.com/stevegrunwell/mailto-link-formatter"
+    },
+    "require": {},
+    "require-dev": {
+        "phpunit/phpunit": "^6.0"
+    },
+    "autoload": {
+        "psr-4": {
+            "SteveGrunwell\\MailToLinkFormatter\\": "src/"
+        }
+    },
+    "config": {
+        "sort-packages": true
+    }
+}

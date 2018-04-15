@@ -34,12 +34,12 @@ class MailTo
     /**
      * Create a new MailTo instance.
      *
-     * @param string|array $recipient One or more message recipients.
+     * @param string|array $recipient Optional. One or more message recipients. Default is empty.
      * @param array        $headers   Optional. Headers (Subject Cc, Bcc, etc.) to include with the
      *                                message. Default is empty.
      * @param string       $body      Optional. The message body. Default is empty.
      */
-    public function __construct( $to, array $headers = [], string $body = '' )
+    public function __construct($to = '', array $headers = [], string $body = '')
     {
         $this->setRecipients($to);
         $this->setHeaders($headers);
@@ -92,7 +92,7 @@ class MailTo
     {
         $key = strtolower($key);
 
-        if (is_string($value)) {
+        if (is_string($value) && 'subject' !== $key) {
             $value = array_map('trim', explode(',', $value));
         }
 
@@ -107,6 +107,20 @@ class MailTo
     public function getHeaders(): array
     {
         return $this->headers;
+    }
+
+    /**
+     * Retrieve a single header.
+     *
+     * @param string $header  The header name to look for.
+     * @param mixed  $default Optional. The default value to return if the header is not set.
+     *                        Default value is null.
+     *
+     * @return mixed Data stored for the given header, or $default if the header has not been set.
+     */
+    public function getHeader(string $header, $default = null)
+    {
+        return isset($this->headers[$header]) ? $this->headers[$header] : $default;
     }
 
     /**

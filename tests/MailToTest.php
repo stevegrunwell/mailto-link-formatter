@@ -200,12 +200,26 @@ class MailToTest extends TestCase
 
     public function testSetBody()
     {
-        $this->markTestIncomplete('Body has not yet been implemented.');
+        $mailto = new MailTo;
+        $mailto->setBody('This is the message body.');
+
+        $this->assertEquals('This is the message body.', $this->getProperty($mailto, 'body'));
+    }
+
+    public function testSetBodyTrimsText()
+    {
+        $mailto = new MailTo;
+        $mailto->setBody('  This is the message body.' . PHP_EOL);
+
+        $this->assertEquals('This is the message body.', $this->getProperty($mailto, 'body'));
     }
 
     public function testGetBody()
     {
-        $this->markTestIncomplete('Body has not yet been implemented.');
+        $mailto = new MailTo;
+        $mailto->setBody('This is the message body');
+
+        $this->assertEquals('This is the message body', $mailto->getBody());
     }
 
     public function testGetLinkWithSingleRecipient()
@@ -232,8 +246,26 @@ class MailToTest extends TestCase
         ]);
 
         $this->assertEquals(
-            'mailto:test@example.com?subject=My+Subject&cc=foo%40example.com',
+            'mailto:test@example.com?subject=My%20Subject&cc=foo%40example.com',
             $mailTo->getLink()
+        );
+    }
+
+    public function testGetLinkWithBody()
+    {
+        $body = <<<EOT
+Bacon ipsum dolor amet drumstick kevin biltong pork belly capicola leberkas ham. Porchetta beef short ribs filet mignon, spare ribs hamburger beef ribs cupim biltong shankle.
+
+Spare ribs beef porchetta, pastrami flank bresaola shoulder shank. Bacon salami pancetta jowl beef, shank shoulder boudin sausage swine landjaeger. Burgdoggen pancetta tri-tip shoulder pork belly beef ribs landjaeger shank cow beef cupim sausage salami leberkas.
+
+Fatback biltong shank burgdoggen pork loin pig pork chop ground round chicken pastrami.
+EOT;
+        $mailto = new MailTo('test@example.com');
+        $mailto->setBody($body);
+
+        $this->assertEquals(
+            'mailto:test@example.com?body=' . rawurlencode($body),
+            $mailto->getLink()
         );
     }
 

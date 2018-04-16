@@ -130,7 +130,7 @@ class MailTo
      */
     public function setBody(string $body)
     {
-        $this->body = $body;
+        $this->body = trim($body);
     }
 
     /**
@@ -150,17 +150,23 @@ class MailTo
      */
     public function getLink(): string
     {
-        $headers = $this->getHeaders();
+        $parameters = $this->getHeaders();
+        $body = $this->getBody();
 
         // Flatten multi-dimensional arrays.
-        array_walk($headers, function (&$value, $header) {
+        array_walk($parameters, function (&$value, $header) {
             $value = implode(',', (array) $value);
         });
+
+        // Append the body, if we have one.
+        if ($body) {
+            $parameters['body'] = $body;
+        }
 
         $url = sprintf(
             'mailto:%s?%s',
             implode(',', $this->getRecipients()),
-            http_build_query($headers)
+            http_build_query($parameters, null, '&', PHP_QUERY_RFC3986)
         );
 
         // If the link ends in a question mark, strip it off.

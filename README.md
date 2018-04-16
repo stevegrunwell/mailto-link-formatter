@@ -26,9 +26,10 @@ $mailto->setHeaders([
     'subject' => 'Hello World!',
     'cc'      => 'foo@example.com',
 ]);
+$mailto->setBody('Some message.');
 
 $mailto->getLink();
-# => mailto:test@example.com?subject=Hello+World!&cc=foo%40example.com
+# => mailto:test@example.com?subject=Hello%20World!&cc=foo%40example.com&body=Some%20message.
 ```
 
 ### Specifying multiple recipients
@@ -75,7 +76,7 @@ use SteveGrunwell\MailToLinkFormatter\MailTo;
 $mailto = new MailTo('test@example.com', [
     'subject' => 'Hello World!',
     'cc'      => 'foo@example.com',
-]);
+], 'This is the message body.');
 
 // This is equivalent to:
 $mailto = new MailTo;
@@ -84,6 +85,7 @@ $mailto->setHeaders([
     'subject' => 'Hello World!',
     'cc'      => 'foo@example.com',
 ]);
+$mailto->setBody('This is the message body.');
 ```
 
 ## License

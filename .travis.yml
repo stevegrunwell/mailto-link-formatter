@@ -12,6 +12,23 @@ php:
 
 install:
   - composer install --prefer-dist
+  - |
+    if [ $TRAVIS_PHP_VERSION = "7.2" ]; then
+      wget https://github.com/php-coveralls/php-coveralls/releases/download/v1.0.0/coveralls.phar \
+      && chmod +x coveralls.phar
+      mkdir -p build/logs
+    fi
 
 script:
-  - ./vendor/bin/phpunit
+  - |
+    if [ $TRAVIS_PHP_VERSION = "7.2" ]; then
+      ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+    else
+      ./vendor/bin/phpunit
+    fi
+
+after_success:
+  - |
+    if [ TRAVIS_PHP_VERSION = "7.2" ]; then
+      travis_retry php coveralls.phar
+    fi

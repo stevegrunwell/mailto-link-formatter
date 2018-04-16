@@ -3,7 +3,7 @@ dist: trusty
 language: php
 
 notifications:
-  email: never
+  email: false
 
 php:
   - 7.2
@@ -29,6 +29,6 @@ script:
 
 after_success:
   - |
-    if [ TRAVIS_PHP_VERSION = "7.2" ]; then
+    if [ $TRAVIS_PHP_VERSION = "7.2" ]; then
       travis_retry php coveralls.phar
     fi

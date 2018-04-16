@@ -1,6 +1,7 @@
 # Mailto: Link Formatter
 
 [![Build Status](https://travis-ci.org/stevegrunwell/mailto-link-formatter.svg?branch=develop)](https://travis-ci.org/stevegrunwell/mailto-link-formatter)
+[![Coverage Status](https://coveralls.io/repos/github/stevegrunwell/mailto-link-formatter/badge.svg?branch=develop)](https://coveralls.io/github/stevegrunwell/mailto-link-formatter?branch=develop)
 [![Packagist](https://img.shields.io/packagist/v/stevegrunwell/mailto-link-formatter.svg)](https://packagist.org/packages/stevegrunwell/mailto-link-formatter)
 
 This package defines a `MailTo` class with a simple API for easily generating [RFC 6068-compliant `mailto:` links](https://www.rfc-editor.org/info/rfc2368) in your markup.

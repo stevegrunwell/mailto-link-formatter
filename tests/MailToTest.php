@@ -13,6 +13,80 @@ use SteveGrunwell\MailToLinkFormatter\MailTo;
 
 class MailToTest extends TestCase
 {
+    public function testMagicSetterForRecipients()
+    {
+        $mailto = new MailTo;
+        $mailto->recipients = 'test@example.com';
+
+        $this->assertEquals([
+            'test@example.com',
+        ], $this->getProperty($mailto, 'recipients'));
+    }
+
+    public function testMagicSetterForHeaders()
+    {
+        $mailto = new MailTo;
+        $mailto->headers = [
+            'foo' => 'bar',
+        ];
+
+        $this->assertEquals([
+            'foo' => [
+                'bar'
+            ],
+        ], $this->getProperty($mailto, 'headers'));
+    }
+
+    public function testMagicSetterForBody()
+    {
+        $mailto = new MailTo;
+        $mailto->body = 'Message body';
+
+        $this->assertEquals('Message body', $this->getProperty($mailto, 'body'));
+    }
+
+    public function testMissingPropertiesAreCastAsHeaders()
+    {
+        $mailto = new MailTo;
+        $mailto->subject = 'My subject';
+
+        $this->assertEquals('My subject', $mailto->getHeader('subject'));
+    }
+
+    public function testMagicGetterForRecipients()
+    {
+        $mailto = new MailTo;
+        $mailto->recipients = 'test@example.com';
+
+        $this->assertEquals($mailto->getRecipients(), $mailto->recipients);
+    }
+
+    public function testMagicGetterForHeaders()
+    {
+        $mailto = new MailTo;
+        $mailto->headers = [
+            'foo' => 'bar',
+        ];
+
+        $this->assertEquals($mailto->getHeaders(), $mailto->headers);
+    }
+
+    public function testMagicGetterForBody()
+    {
+        $mailto = new MailTo;
+        $mailto->body = 'Message body';
+
+        $this->assertEquals($mailto->getBody(), $mailto->body);
+    }
+
+    public function testMissingPropertiesAreRetrievedAsHeaders()
+    {
+        $mailto = new MailTo;
+        $mailto->foo = uniqid();
+
+        $this->assertEquals($mailto->getHeader('foo'), $mailto->foo);
+    }
+
     public function testSetRecipients()
     {
         $mailto = new MailTo;

@@ -20,6 +20,8 @@ If you're already including the Composer-generated autoloader in your project, t
 The `MailTo` class collects information about the `mailto:` link, then generates the link itself via its `getLink()` method:
 
 ```php
+use SteveGrunwell\MailToLinkFormatter\MailTo;
+
 $mailto = new MailTo;
 $mailto->setRecipients('test@example.com');
 $mailto->setHeaders([
@@ -32,11 +34,40 @@ $mailto->getLink();
 # => mailto:test@example.com?subject=Hello%20World!&cc=foo%40example.com&body=Some%20message.
 ```
 
+If you'd prefer, you may also set properties directly on the `MailTo` object, but be aware that this is merely a convenience method for the corresponding setters and getters:
+
+```php
+use SteveGrunwell\MailToLinkFormatter\MailTo;
+
+$mailto = new MailTo;
+
+// The same as calling $mailto->setRecipients('test@example.com').
+$mailto->recipients = 'test@example.com';
+
+// The same as calling $mailto->getRecipients().
+$mailto->recipients
+# => ['test@example.com']
+```
+
+Properties that are used that do not have corresponding setters/getters (e.g. anything except "recipients", "headers", and "body") will be treated as individual headers, passed through the `setHeader()` and `getHeader()` methods:
+
+```php
+use SteveGrunwell\MailToLinkFormatter\MailTo;
+
+$mailto = new MailTo;
+$mailto->subject = 'Message subject';
+
+$mailto->getHeaders();
+# => ['subject' => 'Message subject']
+```
+
 ### Specifying multiple recipients
 
 If the `mailto:` link should have multiple recipients, they can be set either by passing an array or a comma-separated string to `setRecipients()`:
 
 ```php
+use SteveGrunwell\MailToLinkFormatter\MailTo;
+
 $mailto = new MailTo;
 $mailto->setRecipients([
     'foo@example.com',

@@ -47,6 +47,45 @@ class MailTo
     }
 
     /**
+     * Magic setter for methods.
+     *
+     * If a set{$property}() method exists, it will be called. Otherwise, the property will be
+     * treated as a new header.
+     *
+     * @param string $property The property being set.
+     * @param mixed  $value    The value being assigned to the property or header.
+     */
+    public function __set($property, $value)
+    {
+        $method = 'set' . ucwords($property);
+
+        if (method_exists($this, $method)) {
+            $this->$method($value);
+        } else {
+            $this->setHeader($property, $value);
+        }
+    }
+
+    /**
+     * Magic getter for methods.
+     *
+     * @param string $property The property being accessed.
+     *
+     * @return mixed Either the value of the property (if a get{$property}() method exists) or the
+     *               value of $this->getHeader($property), with a default of an empty string.
+     */
+    public function __get($property)
+    {
+        $method = 'get' . ucwords($property);
+
+        if (method_exists($this, $method)) {
+            return $this->$method();
+        } else {
+            return $this->getHeader($property, '');
+        }
+    }
+
+    /**
      * Set the message recipient(s).
      *
      * @param string|array $to One or more message recipients.

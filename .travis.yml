@@ -1,9 +1,5 @@
-sudo: false
 dist: trusty
 language: php
-
-notifications:
-  email: false
 
 php:
   - 7.4

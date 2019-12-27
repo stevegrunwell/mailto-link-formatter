@@ -31,10 +31,10 @@ before_install:
     fi
 
 install:
-  - composer install --prefer-dist
+  - composer install --prefer-dist --no-interaction
   - |
     if [[ ${RUN_CODE_COVERAGE} ]]; then
-      wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.2.0/coveralls.phar \
+      wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.2.0/php-coveralls.phar \
       && chmod +x coveralls.phar
       mkdir -p build/logs
     fi

@@ -35,7 +35,7 @@ install:
   - |
     if [[ ${RUN_CODE_COVERAGE} ]]; then
       wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.2.0/php-coveralls.phar \
-      && chmod +x coveralls.phar
+      && chmod +x php-coveralls.phar
       mkdir -p build/logs
     fi
 
@@ -50,5 +50,5 @@ script:
 after_success:
   - |
     if [[ ${RUN_CODE_COVERAGE} ]]; then
-      travis_retry php coveralls.phar
+      travis_retry php php-coveralls.phar
     fi

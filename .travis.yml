@@ -1,16 +1,20 @@
-dist: trusty
 language: php
+
+notifications:
+  on_success: change
+  on_failure: change
 
 php:
   - 7.4
   - 7.3
   - 7.2
   - 7.1
-  - 7.0
 
 matrix:
   fast_finish: true
   include:
+    - php: 7.0
+      dist: xenial
     - name: Code Coverage
       php: 7.3
       env: $RUN_CODE_COVERAGE=1

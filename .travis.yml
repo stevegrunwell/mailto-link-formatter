@@ -6,29 +6,49 @@ notifications:
   email: false
 
 php:
+  - 7.4
+  - 7.3
   - 7.2
   - 7.1
   - 7.0
 
+matrix:
+  fast_finish: true
+  include:
+    - name: Code Coverage
+      php: 7.3
+      env: $RUN_CODE_COVERAGE=1
+  allow_failures:
+    - name: Code Coverage
+
+
+before_install:
+  - |
+    if [ -f ~/.phpenv/versions/$(phpenv version-name)/etc/conf.d/xdebug.ini ]; then
+      phpenv config-rm xdebug.ini
+    else
+      echo "xdebug.ini does not exist"
+    fi
+
 install:
   - composer install --prefer-dist
   - |
-    if [ $TRAVIS_PHP_VERSION = "7.2" ]; then
-      wget https://github.com/php-coveralls/php-coveralls/releases/download/v1.0.0/coveralls.phar \
+    if [[ ${RUN_CODE_COVERAGE} ]]; then
+      wget https://github.com/php-coveralls/php-coveralls/releases/download/v2.2.0/coveralls.phar \
       && chmod +x coveralls.phar
       mkdir -p build/logs
     fi
 
 script:
   - |
-    if [ $TRAVIS_PHP_VERSION = "7.2" ]; then
-      ./vendor/bin/phpunit --coverage-clover build/logs/clover.xml
+    if [[ ${RUN_CODE_COVERAGE} ]]; then
+      phpdbg -qrr -d memory_limit=-1 ./vendor/bin/phpunit --coverage-clover=build/logs/clover.xml
     else
       ./vendor/bin/phpunit
     fi
 
 after_success:
   - |
-    if [ $TRAVIS_PHP_VERSION = "7.2" ]; then
+    if [[ ${RUN_CODE_COVERAGE} ]]; then
       travis_retry php coveralls.phar
     fi

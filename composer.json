@@ -31,6 +31,9 @@
         }
     },
     "config": {
-        "sort-packages": true
+        "preferred-install": "dist",
+        "process-timeout": 600,
+        "sort-packages": true,
+        "optimize-autoloader": true
     }
 }

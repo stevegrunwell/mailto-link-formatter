@@ -30,6 +30,11 @@
             "SteveGrunwell\\MailToLinkFormatter\\": "src/"
         }
     },
+    "autoload-dev": {
+        "psr-4": {
+            "SteveGrunwell\\MailToLinkFormatter\\Tests\\": "tests/"
+        }
+    },
     "config": {
         "preferred-install": "dist",
         "process-timeout": 600,

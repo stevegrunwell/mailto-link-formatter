@@ -205,7 +205,7 @@ class MailTo
         $url = sprintf(
             'mailto:%s?%s',
             implode(',', $this->getRecipients()),
-            http_build_query($parameters, null, '&', PHP_QUERY_RFC3986)
+            http_build_query($parameters, "", '&', PHP_QUERY_RFC3986)
         );
 
         // If the link ends in a question mark, strip it off.
